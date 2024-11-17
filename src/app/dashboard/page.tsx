@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { redirect } from 'next/navigation';
 import type { Metadata } from 'next';
 import Grid from '@mui/material/Unstable_Grid2';
 import dayjs from 'dayjs';
@@ -16,6 +17,7 @@ import { Traffic } from '@/components/dashboard/overview/traffic';
 export const metadata = { title: `Overview | Dashboard | ${config.site.name}` } satisfies Metadata;
 
 export default function Page(): React.JSX.Element {
+  redirect('/dashboard/personal-info')
   return (
     <Grid container spacing={3}>
       <Grid lg={3} sm={6} xs={12}>

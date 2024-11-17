@@ -71,14 +71,9 @@ export function SignInForm(): React.JSX.Element {
 
   return (
     <Stack spacing={4}>
-      <Stack spacing={1}>
-        <Typography variant="h4">Sign in</Typography>
-        <Typography color="text.secondary" variant="body2">
-          Don&apos;t have an account?{' '}
-          <Link component={RouterLink} href={paths.auth.signUp} underline="hover" variant="subtitle2">
-            Sign up
-          </Link>
-        </Typography>
+      <Stack spacing={1} sx={{display: 'flex', flexDirection: 'row', gap: 2, alignItems: 'baseline'}}>
+        <Typography variant="h2">DIVISIST</Typography>
+        <Typography variant="h5">UFPS</Typography>
       </Stack>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2}>

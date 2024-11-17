@@ -1,6 +1,6 @@
 import type { ColorSystemOptions } from '@mui/material/styles';
 
-import { california, kepple, neonBlue, nevada, redOrange, shakespeare, stormGrey } from './colors';
+import { california, kepple, neonBlue, nevada, redOrange, shakespeare, stormGrey, neonRed, bones } from './colors';
 import type { ColorScheme } from './types';
 
 export const colorSchemes = {
@@ -36,10 +36,10 @@ export const colorSchemes = {
       neutral: { ...nevada },
       primary: {
         ...neonBlue,
-        light: neonBlue[300],
-        main: neonBlue[400],
-        dark: neonBlue[500],
-        contrastText: 'var(--mui-palette-common-black)',
+        light: neonRed[400],
+        main: neonRed[500],
+        dark: neonRed[600],
+        contrastText: 'var(--mui-palette-common-white)',
       },
       secondary: {
         ...nevada,
@@ -103,16 +103,17 @@ export const colorSchemes = {
       neutral: { ...stormGrey },
       primary: {
         ...neonBlue,
-        light: neonBlue[400],
-        main: neonBlue[500],
-        dark: neonBlue[600],
+        light: neonRed[400],
+        main: neonRed[500],
+        dark: neonRed[600],
+        "900": neonRed[950],
         contrastText: 'var(--mui-palette-common-white)',
       },
       secondary: {
         ...nevada,
-        light: nevada[600],
-        main: nevada[700],
-        dark: nevada[800],
+        light: bones[600],
+        main: bones[700],
+        dark: bones[800],
         contrastText: 'var(--mui-palette-common-white)',
       },
       success: {

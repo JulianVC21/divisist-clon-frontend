@@ -7,6 +7,17 @@ export const paths = {
     customers: '/dashboard/customers',
     integrations: '/dashboard/integrations',
     settings: '/dashboard/settings',
+    personalInfo: '/dashboard/personal-info',
+    miUfps: '/dashboard/my-ufps',
+    tuitionStatus: '/dashboard/tuition-status',
+    subjects: '/dashboard/subjects',
+    schedule: '/dashboard/schedule',
+    grades: '/dashboard/grades',
+    pensum: '/dashboard/pensum',
+    subjectsInfo: '/dashboard/subjects-info',
+    certificates: '/dashboard/certificates',
+    paymentsHistory: '/dashboard/payments-history',
+
   },
   errors: { notFound: '/errors/not-found' },
 } as const;

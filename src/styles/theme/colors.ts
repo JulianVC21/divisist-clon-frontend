@@ -97,3 +97,32 @@ export const stormGrey = {
   900: '#212636',
   950: '#121621',
 } satisfies PaletteRange;
+
+export const neonRed = {
+  50: '#ffeff2',
+  100: '#ffdce2',
+  200: '#ffbfc9',
+  300: '#ff92a4',
+  400: '#ff5470',
+  500: '#ff1f44',
+  600: '#ff002a',
+  700: '#db0024',
+  800: '#bd001f',
+  900: '#94081f',
+  950: '#52000d',
+} satisfies PaletteRange
+
+export const bones = {
+  '50': '#ffffff',
+  '100': '#efefef',
+  '200': '#dcdcdc',
+  '300': '#bdbdbd',
+  '400': '#989898',
+  '500': '#7c7c7c',
+  '600': '#656565',
+  '700': '#525252',
+  '800': '#464646',
+  '900': '#3d3d3d',
+  '950': '#292929',
+} satisfies PaletteRange
+
