@@ -28,8 +28,13 @@ export interface SignInWithOAuthParams {
 }
 
 export interface SignInWithPasswordParams {
-  email: string;
+  code: string;
+  dni: string;
   password: string;
+}
+
+export interface AuthSessionParams {
+  token: string
 }
 
 export interface ResetPasswordParams {
@@ -52,22 +57,79 @@ class AuthClient {
   }
 
   async signInWithPassword(params: SignInWithPasswordParams): Promise<{ error?: string }> {
-    const { email, password } = params;
+    const { code, dni, password } = params;
 
-    // Make API request
+    try {
+      // Make API request
+      const url = 'http://localhost:8000/api/v1/students/login/'
+      const body = {
+        'dni': dni,
+        'career': code.substring(0, 3),
+        'consecutive': code.substring(3),
+        'password': password
+      }
+      const res = fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
+      const data = await res.then(r => r.json())
+      const token = await data.access_token
+      if (token) localStorage.setItem('divisist-auth-token', token);
+      else throw new Error(data.message)
+      return {};
 
-    // We do not handle the API, so we'll check if the credentials match with the hardcoded ones.
-    if (email !== 'sofia@devias.io' || password !== 'Secret1') {
-      return { error: 'Invalid credentials' };
+    } catch (err: any) {
+      return { error: err.message };
     }
-
-    const token = generateToken();
-    localStorage.setItem('custom-auth-token', token);
-
-    return {};
   }
 
-  async resetPassword(_: ResetPasswordParams): Promise<{ error?: string }> {
+  async authSession(token: string | null): Promise<{ value: { auth: boolean, user?: any } }> {
+    const url = 'http://localhost:8000/api/v1/students/auth_login/';
+    const res = fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+    });
+
+    const data = await res.then(r => r.json())
+    return await data
+  }
+
+  async checkSession(): Promise<boolean> {
+    const token = localStorage.getItem('custom-auth-token');
+    const isAuth = (await this.authSession(token)).value.auth;
+    if (isAuth) return true;
+    return false;
+  }
+
+  async resetPassword({ email }: ResetPasswordParams): Promise<{ error?: string }> {
+    
+    try {
+      const url = 'http://localhost:8000/api/v1/users/recovery_password/'
+      const body = {
+        institutional_email: email,
+      }
+      const res = fetch(url, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      })
+      const json = (await res).json();
+      console.log(json);
+      
+      return {}
+    } catch (error) {
+      return {error: 'errorerror'}
+    }
+    
     return { error: 'Password reset not implemented' };
   }
 
@@ -76,20 +138,55 @@ class AuthClient {
   }
 
   async getUser(): Promise<{ data?: User | null; error?: string }> {
-    // Make API request
+    const token = localStorage.getItem('divisist-auth-token');
+    
+  
+    try {
+      const session = await this.authSession(token);
+      if (!session.value.auth) {
+        return { data: null };
+      }
+  
+      const url = `http://localhost:8000/api/v1/students/${session.value.user}`;
+      const res = await fetch(url, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!res.ok) {
+        throw new Error(`Error: ${res.status} ${res.statusText}`);
+      }
+  
+      const json = await res.json();
+      const user: User = {
+        id: json.id,
+        name: json.name,
+        lastname: json.lastname,
+        email: json.personal_email,
+        institutionalEmail: json.institutional_email,
+        dni: json.dni,
+        birthday: json.birthday,
+        career: json.career,
+        consecutive: json.consecutive,
+        state: json.state,
+      };
 
-    // We do not handle the API, so just check if we have a token in localStorage.
-    const token = localStorage.getItem('custom-auth-token');
-
-    if (!token) {
-      return { data: null };
+      console.log(res);
+      
+  
+      return { data: user };
+    } catch (error) {
+      return { data: null, error: error instanceof Error ? error.message : 'Unknown error' };
     }
-
-    return { data: user };
   }
+  
+
 
   async signOut(): Promise<{ error?: string }> {
-    localStorage.removeItem('custom-auth-token');
+    localStorage.removeItem('divisist-auth-token');
 
     return {};
   }

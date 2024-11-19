@@ -9,6 +9,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
+import { useUser } from '@/hooks/use-user';
+
 export interface UserProps {
     code?: String;
     dni?: String,
@@ -24,20 +26,10 @@ export interface UserProps {
     career?: String;
 }
 
-export function UserInfoTable({
-    code = '', 
-    dni = '', 
-    name = '', 
-    lastName = '', 
-    phone = '', 
-    cellphone = '', 
-    address = '', 
-    email = '',
-    institutionalEmail = '', 
-    career = '', 
-    inclutionDate = new Date(), 
-    state = ''
-}: UserProps){
+export function UserInfoTable(){
+
+    const { user } = useUser();
+    const inclutionDate = new Date();
 
     return (
         <Card>
@@ -50,7 +42,7 @@ export function UserInfoTable({
                                 <Typography variant='subtitle1'>Código</Typography>
                             </TableCell>
                             <TableCell>
-                                {code}
+                                {user?.career}{user?.consecutive}
                             </TableCell>
                         </TableRow>
                         {/* documento */}
@@ -59,7 +51,7 @@ export function UserInfoTable({
                                 <Typography variant='subtitle1'>Número de documento</Typography>
                             </TableCell>
                             <TableCell>
-                                {dni}
+                                {user?.dni}
                             </TableCell>
                         </TableRow>
                         {/* nombre */}
@@ -68,7 +60,7 @@ export function UserInfoTable({
                                 <Typography variant='subtitle1'>Nombre</Typography>
                             </TableCell>
                             <TableCell>
-                                {name}
+                                {user?.name}
                             </TableCell>
                         </TableRow>
                         {/* apellido */}
@@ -77,7 +69,7 @@ export function UserInfoTable({
                                 <Typography variant='subtitle1'>Apellido</Typography>
                             </TableCell>
                             <TableCell>
-                                {lastName}
+                                {user?.lastname}
                             </TableCell>
                         </TableRow>
                         {/* telefono */}
@@ -86,7 +78,7 @@ export function UserInfoTable({
                                 <Typography variant='subtitle1'>Teléfono</Typography>
                             </TableCell>
                             <TableCell>
-                                {phone}
+                                {user?.phone}
                             </TableCell>
                         </TableRow>
                         {/* telefono celular */}
@@ -95,7 +87,7 @@ export function UserInfoTable({
                                 <Typography variant='subtitle1'>Celular</Typography>
                             </TableCell>
                             <TableCell>
-                                {cellphone}
+                                {user?.cellphone}
                             </TableCell>
                         </TableRow>
                         {/* email */}
@@ -104,7 +96,7 @@ export function UserInfoTable({
                                 <Typography variant='subtitle1'>Email</Typography>
                             </TableCell>
                             <TableCell>
-                                {email}
+                                {user?.email}
                             </TableCell>
                         </TableRow>
                         {/* email intitucional */}
@@ -113,7 +105,7 @@ export function UserInfoTable({
                                 <Typography variant='subtitle1'>Email Institucional</Typography>
                             </TableCell>
                             <TableCell>
-                                {institutionalEmail}
+                                {user?.institutionalEmail}
                             </TableCell>
                         </TableRow>
                         {/* fecha inclusion */}
@@ -131,7 +123,7 @@ export function UserInfoTable({
                                 <Typography variant='subtitle1'>Dirección</Typography>
                             </TableCell>
                             <TableCell>
-                                {address}
+                                {user?.address}
                             </TableCell>
                         </TableRow>
                         {/* carrera */}
@@ -140,7 +132,7 @@ export function UserInfoTable({
                                 <Typography variant='subtitle1'>Carrera</Typography>
                             </TableCell>
                             <TableCell>
-                                {career}
+                                {user?.career}
                             </TableCell>
                         </TableRow>
                         {/* Estado */}
@@ -149,7 +141,7 @@ export function UserInfoTable({
                                 <Typography variant='subtitle1'>Estado</Typography>
                             </TableCell>
                             <TableCell>
-                                {state}
+                                {user?.state}
                             </TableCell>
                         </TableRow>
                     </TableBody>
