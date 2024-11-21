@@ -41,7 +41,12 @@ export interface ResetPasswordParams {
   email: string;
 }
 
+export interface RecoveryPasswordTokenParams {
+  token: string
+}
+
 class AuthClient {
+
   async signUp(_: SignUpParams): Promise<{ error?: string }> {
     // Make API request
 
@@ -133,6 +138,31 @@ class AuthClient {
     return { error: 'Password reset not implemented' };
   }
 
+  async checkRecoveryPasswordToken( { token }: RecoveryPasswordTokenParams): Promise<{ error?: string }> {
+    
+    const url = 'http://localhost:8000/api/v1/users/check_recovery_token/'
+    const body = {
+      recovery_token: token
+    }
+    const res = fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body)
+    });
+    const json = await res.then(data => data.json());
+
+    console.log(json);
+    
+
+    if(json.isValid) {
+      return {}
+    }
+
+    return {error : ''}
+  }
+
   async updatePassword(_: ResetPasswordParams): Promise<{ error?: string }> {
     return { error: 'Update reset not implemented' };
   }
@@ -183,8 +213,6 @@ class AuthClient {
     }
   }
   
-
-
   async signOut(): Promise<{ error?: string }> {
     localStorage.removeItem('divisist-auth-token');
 
