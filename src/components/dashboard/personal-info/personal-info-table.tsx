@@ -30,7 +30,6 @@ export interface UserProps {
 export function UserInfoTable(){
 
     const { user } = useUser();
-    const inclutionDate = new Date();
 
     return (
         <Card>
@@ -79,7 +78,7 @@ export function UserInfoTable(){
                                 <Typography variant='subtitle1'>Teléfono</Typography>
                             </TableCell>
                             <TableCell>
-                                {user?.phone}
+                                {user?.telephone}
                             </TableCell>
                         </TableRow>
                         {/* telefono celular */}
@@ -115,7 +114,7 @@ export function UserInfoTable(){
                                 <Typography variant='subtitle1'>Fecha de Inclusión</Typography>
                             </TableCell>
                             <TableCell>
-                                {`${inclutionDate.getDate()}/${inclutionDate.getMonth()}/${inclutionDate.getFullYear()}`}
+                                {user?.inclusion_date}
                             </TableCell>
                         </TableRow>
                         {/* direccion */}

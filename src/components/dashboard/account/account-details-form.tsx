@@ -59,7 +59,7 @@ export function AccountDetailsForm(): React.JSX.Element {
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
                 <InputLabel>Phone number</InputLabel>
-                <OutlinedInput label="Phone number" name="phone" type="tel" />
+                <OutlinedInput label={user?.cellphone} name="phone" type="tel" />
               </FormControl>
             </Grid>
           </Grid>

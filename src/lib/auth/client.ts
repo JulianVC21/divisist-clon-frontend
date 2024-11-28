@@ -202,6 +202,10 @@ class AuthClient {
         career: json.career,
         consecutive: json.consecutive,
         state: json.state,
+        telephone: json.telephone,
+        cellphone: json.cellphone,
+        address: json.address,
+        inclusion_date: json.inclusion_date
       };
 
       console.log(json);

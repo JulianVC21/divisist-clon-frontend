@@ -10,6 +10,9 @@ export interface User {
   career?: string;
   consecutive?: string;
   state?: string;
-
+  telephone?: string;
+  cellphone?: string;
+  address?: string;
+  inclusion_date?: string;
   [key: string]: unknown;
 }
