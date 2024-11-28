@@ -23,36 +23,17 @@ async function validateToken(token: string): Promise<boolean> {
     }
 }
 
-// getServerSideProps para manejar la validación y los datos iniciales
-export async function getServerSideProps(context: { params: { token: string } }) {
-    const { token } = context.params;
-
-    if (!token) {
-        return {
-            notFound: true, // Muestra una página 404 si el token no está presente
-        };
-    }
-
-    const isValid = await validateToken(token);
-
-    if (!isValid) {
-        return {
-            props: {
-                isValid: false,
-                errorMessage: 'URL de recuperación no válida.',
-            },
-        };
-    }
-
-    return {
-        props: {
-            isValid: true,
-        },
-    };
-}
-
 // Componente principal de la página
-export default function RecoveryPasswordPage() {
+export default async function RecoveryPasswordPage( { params }: any) {
+
+  const { token } = await params;
+
+  const isValidToken = await validateToken(token);
+
+  if(!isValidToken){
+    console.log('error token');
+    
+  }
   
     return (
       <Layout>
